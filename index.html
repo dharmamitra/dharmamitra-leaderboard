@@ -33,6 +33,10 @@
   th { background:var(--light); cursor:pointer; user-select:none; white-space:nowrap;
     position:sticky; top:0; z-index:2; font-weight:500; color:#4a2f33; }
   th:hover { background:#f6e2dd; }
+  th.sorted { color:var(--accent); background:#f3d9d2; }
+  th.sorted-asc::after { content:" ▲"; font-size:.72em; vertical-align:1px; }
+  th.sorted-desc::after { content:" ▼"; font-size:.72em; vertical-align:1px; }
+  .col-active { box-shadow: inset 2px 0 0 var(--accent), inset -2px 0 0 var(--accent); }
   th.model, td.model { text-align:left; }
   td.model { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.86rem;
     color:var(--accent); }
@@ -230,14 +234,27 @@ function sortTable(table, idx, numeric, dir){
   });
   rows.forEach(r=>tb.appendChild(r));
 }
+function markSort(table, idx, dir){
+  table.querySelectorAll("th").forEach((th,i)=>{
+    th.classList.remove("sorted","sorted-asc","sorted-desc","col-active");
+    if(i===idx) th.classList.add("sorted", dir>0?"sorted-asc":"sorted-desc", "col-active");
+  });
+  table.querySelectorAll("tbody tr").forEach(tr=>{
+    [...tr.cells].forEach((td,i)=> td.classList.toggle("col-active", i===idx));
+  });
+}
 document.querySelectorAll("table").forEach(table=>{
   table.querySelectorAll("th").forEach((th,idx)=>{
-    let dir=-1;
+    const numeric = th.hasAttribute("data-num") || (!th.hasAttribute("data-text") && idx>1);
     th.addEventListener("click", ()=>{
-      const numeric = th.hasAttribute("data-num") || (!th.hasAttribute("data-text") && idx>1);
-      dir=-dir; sortTable(table, idx, numeric, dir);
+      th._dir = (th._dir===undefined) ? (numeric ? -1 : 1) : -th._dir;  // 1st click: numeric desc, text asc
+      sortTable(table, idx, numeric, th._dir);
+      markSort(table, idx, th._dir);
     });
   });
+  // initial state reflects the pre-sorted order: BLEURT column (index 2), descending
+  const bl = table.querySelectorAll("th")[2];
+  if(bl){ bl._dir = -1; markSort(table, 2, -1); }
 });
 
 // filter
