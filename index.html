@@ -92,6 +92,25 @@
      surface-overlap metrics — also in the row breakdown. Click a column header to sort.</p>
 </header>
 
+<div class="note">
+  <b>What the scores measure.</b> Every model translates the same sentences; we then compare each
+  translation against a human reference translation. Three different scores capture “how close is
+  the machine translation to the human one?”:
+  <ul>
+    <li><b>BLEURT</b> (the headline score, shown 0–100) — a <b>meaning</b>-based score from an AI
+        model trained on human quality judgements. It rewards translations that say the
+        <i>same thing</i> as the reference even when the wording differs, so it tracks human opinion
+        of quality more closely than the two metrics below. This is what the leaderboard is ranked by.</li>
+    <li><b>BLEU</b> (0–100) — measures <b>word overlap</b>: how many words and short word-sequences the
+        translation shares with the reference. Simple and widely used, but blind to meaning, so a good
+        paraphrase can score low.</li>
+    <li><b>chrF</b> (0–100) — like BLEU but measures <b>character overlap</b> instead of whole words, so
+        it is more forgiving of word endings and spelling differences (helpful for these languages).</li>
+  </ul>
+  For all three, <b>higher = closer to the human translation = better</b>. None is perfect, which is
+  why we report all three; BLEURT is the most reliable, so it drives the ranking.
+</div>
+
 <div class="controls">
   <input id="filter" type="text" placeholder="Filter models…  (e.g. claude, gpt, gemini, mitra)">
 </div>
