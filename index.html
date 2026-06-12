@@ -85,9 +85,11 @@
   <p class="sub">Translation quality of 33 models on classical Asian languages → English.</p>
   <p class="sub">Language pairs: <b>Tibetan → English</b> (bo-en) · <b>Sanskrit → English</b> (sa-en) · <b>Chinese → English</b> (zh-en).</p>
   <p class="meta">Ranked by <b>BLEURT</b> (learned semantic-quality metric), averaged over the three
-     language pairs; columns show per-language BLEURT. BLEU and chrF are surface-overlap metrics —
-     see them by <b>clicking any model row</b> for the full breakdown (and in the heatmap below).
-     Click a column header to sort.</p>
+     language pairs; columns show per-language BLEURT. Because raw BLEURT-20 scores cluster tightly
+     (~0.47–0.60), they are displayed as a <b>relative 0–100 score</b> — min–max normalized across
+     the models listed here (<b>100</b> = best, <b>0</b> = worst). Raw BLEURT-20 values appear in the
+     per-language heatmap below and when you <b>click any model row</b>. BLEU and chrF are
+     surface-overlap metrics — also in the row breakdown. Click a column header to sort.</p>
 </header>
 
 <div class="controls">
@@ -95,10 +97,15 @@
 </div>
 
 <h2>Leaderboard</h2>
+<p class="meta">Each row is one model, ranked by its overall <b>BLEURT (0–100)</b> score — translation
+   quality averaged across all three language pairs. The <b>Tibetan</b>, <b>Sanskrit</b> and
+   <b>Chinese</b> columns are that same 0–100 score for each individual language pair. Higher and
+   greener is better. <b>Click any row</b> for the full per-language breakdown including BLEU, chrF,
+   and the raw BLEURT-20 value.</p>
 <table id="board">
   <thead><tr>
     <th data-num>#</th><th class="model" data-text>Model</th>
-    <th data-num>BLEURT</th><th>Tibetan</th><th>Sanskrit</th><th>Chinese</th>
+    <th data-num>BLEURT<br><small>(0–100)</small></th><th>Tibetan</th><th>Sanskrit</th><th>Chinese</th>
   </tr></thead>
   <tbody>
 <tr data-model="mitra-3-flash-preview"><td class="rank">1</td><td class="model" data-text="MITRA (gemini-3-flash-preview)">MITRA (gemini-3-flash-preview)</td><td class="overall" data-sort="0.5866" style="background:rgb(26,122,58)">0.587</td><td data-sort="0.5903" style="background:rgb(53,137,74)">0.590</td><td data-sort="0.5753" style="background:rgb(31,124,61)">0.575</td><td data-sort="0.5941" style="background:rgb(48,134,71)">0.594</td></tr>
@@ -137,12 +144,14 @@
 <p class="hint">Tip: click a row to see Tibetan / Sanskrit / Chinese results for that model.</p>
 
 <h2>High thinking budget (tb = 1024)</h2>
-<p class="meta">Shown separately — these use a large reasoning budget and are not ranked
-   head-to-head with the minimal-reasoning models above.</p>
+<p class="meta">Same scoring as the main board (BLEURT 0–100), but these models were run with a large
+   1024-token reasoning budget. They are listed separately because the extra reasoning makes them
+   slower and more expensive, so they are not ranked head-to-head with the minimal-reasoning models
+   above.</p>
 <table id="board-tb">
   <thead><tr>
     <th data-num>#</th><th class="model" data-text>Model</th>
-    <th data-num>BLEURT</th><th>Tibetan</th><th>Sanskrit</th><th>Chinese</th>
+    <th data-num>BLEURT<br><small>(0–100)</small></th><th>Tibetan</th><th>Sanskrit</th><th>Chinese</th>
   </tr></thead>
   <tbody>
 <tr data-model="gemini-3-flash-preview-tb1024"><td class="rank">1</td><td class="model" data-text="gemini-3-flash-preview-tb1024">gemini-3-flash-preview-tb1024</td><td class="overall" data-sort="0.5810" style="background:rgb(50,135,72)">0.581</td><td data-sort="0.5772" style="background:rgb(100,164,102)">0.577</td><td data-sort="0.5669" style="background:rgb(66,144,82)">0.567</td><td data-sort="0.5987" style="background:rgb(32,125,62)">0.599</td></tr>
@@ -150,12 +159,16 @@
   </tbody>
 </table>
 
-<h2>Per-language detail</h2>
+<h2>Per-language detail (raw scores)</h2>
+<p class="meta">This heatmap shows the <b>raw, un-rescaled</b> scores behind the leaderboard — one cell for
+   every model, metric and language pair. Each block of three columns is a language pair
+   (<b>bo-en</b> = Tibetan→English, <b>sa-en</b> = Sanskrit→English, <b>zh-en</b> = Chinese→English),
+   and within it the three metrics are <b>BLEU</b> and <b>chrF</b> (word/character overlap with the
+   reference, 0–100) and <b>BLEURT-20</b> (a learned semantic-similarity score, roughly 0.4–0.6 here).
+   Color is normalized per metric so each is comparable down its own column.</p>
 <figure>
-  <img src="summary_overview.png" alt="Per-model, per-language, per-metric heatmap">
-  <figcaption>Every model × metric × language pair. Columns bo-en / sa-en / zh-en are
-    Tibetan → English, Sanskrit → English, Chinese → English. Color is per-metric
-    normalized (red = worst, green = best); cell text is the raw score.</figcaption>
+  <img src="summary_overview.png" alt="Per-model, per-language, per-metric heatmap of raw BLEU, chrF and BLEURT scores">
+  <figcaption>Red = worst, green = best within each metric; the number in each cell is the raw score.</figcaption>
 </figure>
 
 <div class="note">
@@ -176,6 +189,9 @@
   (sacreBLEU) and <b>BLEURT-20</b>. GEMBA is excluded (the upstream LLM-judge endpoint is
   currently unavailable). “tb1024” marks a 1024-token thinking budget; <b>mitra-*</b> entries are
   the Dharmamitra translation pipeline (retrieval + dictionary augmentation) over the named model.
+  In the tables, <b>BLEURT is shown as a relative 0–100 score</b> (min–max normalized across the
+  listed models) so the closely-spaced raw values are easier to read; the underlying BLEURT-20 scores
+  span roughly 0.47–0.60 and are shown raw in the heatmap above and in each model’s row detail.
 </div>
 
 <footer>Generated from <code>evaluation/outputs/all_scores.csv</code>. Dharmamitra MT evaluation.</footer>
@@ -191,6 +207,28 @@ const DSLABEL = {"bo-en": "Tibetan \u2192 English", "sa-en": "Sanskrit \u2192 En
 const MORDER = ["BLEU","CHRF","Average_BLEURT"];
 const MLABEL = {BLEU:"BLEU", CHRF:"chrF", Average_BLEURT:"BLEURT"};
 const fmt = (v,m) => (v==null) ? "—" : (m==="Average_BLEURT" ? v.toFixed(3) : v.toFixed(1));
+
+// --- Relative 0–100 BLEURT score (min–max normalized across all listed models) ---
+// Raw BLEURT-20 stays in the data (cell data-sort attrs + DETAIL); only the printed
+// number is rescaled, so the tightly-clustered raw range (~0.47–0.60) spreads to 0–100.
+// 100 = best listed model, 0 = worst. NB: this is a RELATIVE score — it shifts if the
+// set of listed models changes. Raw values remain in the heatmap and the row modal.
+const BL_RANGE = {overall:[Infinity,-Infinity], "bo-en":[Infinity,-Infinity],
+                  "sa-en":[Infinity,-Infinity], "zh-en":[Infinity,-Infinity]};
+for(const k in DETAIL){
+  const o = DETAIL[k].avg.Average_BLEURT;
+  if(o!=null){ BL_RANGE.overall[0]=Math.min(BL_RANGE.overall[0],o); BL_RANGE.overall[1]=Math.max(BL_RANGE.overall[1],o); }
+  for(const ds in DETAIL[k].langs){ const v=DETAIL[k].langs[ds].Average_BLEURT;
+    if(v!=null){ BL_RANGE[ds][0]=Math.min(BL_RANGE[ds][0],v); BL_RANGE[ds][1]=Math.max(BL_RANGE[ds][1],v); } }
+}
+const blnorm = (v,key) => { if(v==null) return "—"; const [lo,hi]=BL_RANGE[key]||BL_RANGE.overall;
+  return hi>lo ? Math.max(0,Math.min(100,Math.round((v-lo)/(hi-lo)*100))) : 50; };
+// rewrite the displayed BLEURT cells: overall col (2) → overall range; lang cols 3/4/5 → per-language range
+const COLKEY = {2:"overall", 3:"bo-en", 4:"sa-en", 5:"zh-en"};
+document.querySelectorAll("#board tbody tr, #board-tb tbody tr").forEach(tr=>{
+  for(const c in COLKEY){ const cell=tr.cells[c]; if(!cell) continue;
+    const v=parseFloat(cell.dataset.sort); if(!isNaN(v)) cell.textContent = blnorm(v, COLKEY[c]); }
+});
 
 function ramp(v){
   if(v==null) return "#d9d9d9";
@@ -215,18 +253,23 @@ function openModal(model){
   for(const ds in d.langs){
     const cells = MORDER.map(m=>{
       const v=d.langs[ds][m];
-      return `<td style="background:${ramp(cnorm(v,m))}">${fmt(v,m)}</td>`;
+      const txt = (m==="Average_BLEURT") ? blnorm(v,ds) : fmt(v,m);
+      return `<td style="background:${ramp(cnorm(v,m))}">${txt}</td>`;
     }).join("");
     rows += `<tr><td class="lang">${DSLABEL[ds]||ds}</td>${cells}</tr>`;
   }
-  const avg = MORDER.map(m=>`<td><b>${fmt(d.avg[m],m)}</b></td>`).join("");
+  const avg = MORDER.map(m=>{
+    const txt = (m==="Average_BLEURT") ? blnorm(d.avg[m],"overall") : fmt(d.avg[m],m);
+    return `<td><b>${txt}</b></td>`;
+  }).join("");
   const pill = d.group==="tb1024" ? '<span class="pill">tb = 1024</span>' : '';
   const head = MORDER.map(m=>`<th>${MLABEL[m]}</th>`).join("");
   document.getElementById("card").innerHTML =
     `<button class="close" onclick="closeModal()">×</button>
      <h3>${d.display||model}${pill}</h3>
-     <div class="ov">Mean BLEURT <b>${d.overall==null?"—":d.overall.toFixed(3)}</b>
-        &nbsp;·&nbsp; per language pair (BLEU · chrF · BLEURT):</div>
+     <div class="ov">BLEURT score <b>${blnorm(d.avg.Average_BLEURT,"overall")}</b> / 100
+        <span style="opacity:.6">(raw BLEURT-20 ${d.overall==null?"—":d.overall.toFixed(3)})</span>
+        &nbsp;·&nbsp; per language pair (BLEU · chrF · BLEURT 0–100):</div>
      <table><thead><tr><th class="lang">Language pair</th>${head}</tr></thead>
      <tbody>${rows}
        <tr><td class="lang"><b>Average</b></td>${avg}</tr></tbody></table>`;
