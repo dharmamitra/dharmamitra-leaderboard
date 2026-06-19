@@ -42,6 +42,12 @@ DISPLAY = {
     "mitra-3-flash-preview": "MITRA (gemini-3-flash-preview)",
     "mitra-3.1-flash-lite": "MITRA (gemini-3.1-flash-lite)",
     "mitra-3.5-flash": "MITRA (gemini-3.5-flash)",
+    # gemma-2-mitra knn-RAG finetunes (local) + GRPO RL post-training
+    "gemma-2-mitra-knn-sft-ckpt10-temp02": "MITRA-knn SFT (gemma-2-9B, ckpt-10)",
+    "gemma-2-mitra-knn-sft-ckpt25-temp02": "MITRA-knn SFT (gemma-2-9B, ckpt-25)",
+    "gemma-2-mitra-knn-sft-ckpt80-temp02": "MITRA-knn SFT (gemma-2-9B, ckpt-80)",
+    "grpo-ckpt70": "MITRA-knn RL (gemma-2-9B, SFT+GRPO)",
+    "hunyuan-mt-7b-direct": "Hunyuan-MT-7B (direct)",
 }
 
 EXCLUDE_SUFFIXES = ("-s500",)
