@@ -48,6 +48,10 @@ DISPLAY = {
     "gemma-2-mitra-knn-sft-ckpt80-temp02": "MITRA-knn SFT (gemma-2-9B, ckpt-80)",
     "grpo-ckpt70": "MITRA-knn RL (gemma-2-9B, SFT+GRPO)",
     "hunyuan-mt-7b-direct": "Hunyuan-MT-7B (direct)",
+    # Qwen3.5-122B-A10B-AWQ local runs (no-knn + knn-RAG, thinking disabled);
+    # groups with the off-machine Qwen3.5-27B/35B-A3B/9B comparison entries.
+    "qwen3.5-122b-a10b-vanilla-temp02": "Qwen3.5-122B-A10B",
+    "qwen3.5-122b-a10b-knn-rag-temp02": "Qwen3.5-122B-A10B (knn-RAG)",
 }
 
 EXCLUDE_SUFFIXES = ("-s500",)
