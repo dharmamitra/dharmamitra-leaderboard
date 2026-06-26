@@ -47,11 +47,20 @@ DISPLAY = {
     "gemma-2-mitra-knn-sft-ckpt25-temp02": "MITRA-knn SFT (gemma-2-9B, ckpt-25)",
     "gemma-2-mitra-knn-sft-ckpt80-temp02": "MITRA-knn SFT (gemma-2-9B, ckpt-80)",
     "grpo-ckpt70": "MITRA-knn RL (gemma-2-9B, SFT+GRPO)",
+    # BM25 (Tibetan char-ngram) retrieval variants — same pipeline, ES BM25 over the
+    # 13M index instead of labse-knn vectors (no embedding model needed).
+    "grpo-ckpt70-bm25": "MITRA-BM25 RL (gemma-2-9B, SFT+GRPO)",
+    "gemma-3-12b-it-bm25-rag-temp02": "gemma-3-12b-it (BM25-RAG)",
+    "mitra-3.1-flash-lite-bm25": "MITRA-BM25 (gemini-3.1-flash-lite)",
     "hunyuan-mt-7b-direct": "Hunyuan-MT-7B (direct)",
     # Qwen3.5-122B-A10B-AWQ local runs (no-knn + knn-RAG, thinking disabled);
     # groups with the off-machine Qwen3.5-27B/35B-A3B/9B comparison entries.
     "qwen3.5-122b-a10b-vanilla-temp02": "Qwen3.5-122B-A10B",
     "qwen3.5-122b-a10b-knn-rag-temp02": "Qwen3.5-122B-A10B (knn-RAG)",
+    "qwen3.5-4b-vanilla-temp02": "Qwen3.5-4B",
+    "qwen3.5-4b-knn-rag-temp02": "Qwen3.5-4B (knn-RAG)",
+    "qwen3-8b-vanilla-temp02": "Qwen3-8B",
+    "qwen3-8b-knn-rag-temp02": "Qwen3-8B (knn-RAG)",
 }
 
 EXCLUDE_SUFFIXES = ("-s500",)
